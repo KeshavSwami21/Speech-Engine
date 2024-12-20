@@ -1,41 +1,76 @@
-# Speech-Engine
-it is a module in which there is a class named recognition it uses speech_recognition model and vosk model
+# Speech-Engine  
+Speech-Engine is a Python module designed for speech recognition, combining the functionalities of the `speech_recognition` library and the Vosk model. It provides a streamlined interface to capture and process audio input from a microphone and convert it into meaningful text.
 
-# speech_recognition model
-it is used to take input from microphone by using .listen() meathod from its Recognizer class
+## Models Used  
 
-# vosk model
-it is used to recognize the wave form audio we used two class from it:
+### 1. `speech_recognition` Model  
+The `speech_recognition` model is used to capture audio input from a microphone. It utilizes the `.listen()` method from its `Recognizer` class to obtain audio data in real-time.  
 
-->Model class:
+### 2. Vosk Model  
+The Vosk model is employed for offline speech recognition. It utilizes two key classes:  
 
-we used it to create a model from which we can recognize the audio offline with the files in our system.The location of file must be added to Model class constructor to make model.
+#### **`Model` Class**  
+The `Model` class is used to load the Vosk model for offline speech recognition.  
+- The model files need to be specified when creating an instance of the `Model` class.  
+- Ensure that the model folder is located at the correct file path, and replace single backslashes (`\`) with double backslashes (`\\`) in the path.
 
-the folder which is added must be in the exact location and "\" must be replaced by "\\" in the path
+#### **`KaldiRecognizer` Class**  
+The `KaldiRecognizer` class processes audio waveforms and converts them into text.  
+- Use the `.AcceptWaveForm()` method to process the waveform data.  
+- The `.result()` method fetches the recognized text.  
+- Any redundant strings in the output are filtered by processing the result string to extract only the necessary text.  
 
-->KaldiRecognizer class:
+## Recognition Class  
+The `Recognition` class is the primary interface of the module, providing two core functions:  
 
-it is the recognizer which we use to recognize what the audio is saying. We used AcceptWaveForm() to recognize the wave file then use result() to fetch the recognized text
+### **`take_command()`**  
+This function uses the `speech_recognition` model to capture audio input from a microphone and convert it into a waveform.  
+- **Returns**: The captured audio waveform, ready for further processing.  
 
-but text have some redundent string so we remove it by traversing the string and gets the recognized text only
+### **`recognize_command()`**  
+This function processes the waveform input and converts it into meaningful text using the Vosk model.  
+- **Returns**: A filtered string containing only the necessary information for further operations.  
+- Internally uses the `KaldiRecognizer` class with `.AcceptWaveForm()` and `.result()` methods.  
 
-# Recognition Class
-In this class we have two different functions take_command() and recognize_command()
+## Testing  
+### Prerequisites  
+1. **Download Vosk Model**  
+   Before testing, download the Vosk model for Indian English from [alphacephei.com](https://alphacephei.com/vosk/models).  
+   > *Note*: This repository does not include the model folder due to size constraints. Ensure that the downloaded folder is placed in the correct directory.  
 
-# take_command()
-In this function we used speech_recognition model it is used to just take input from the microphone and convert it to wave form so kaldi can recognize it
+2. **Setup**  
+   - Create a Python file in the same directory as the module.  
+   - Import the `Recognition` class:  
+     ```python  
+     from speechEngine import Recognition  
+     ```  
 
-it returns the wave form of the input from microphone
+### Example  
+Here’s a quick example to test the module:  
+```python  
+# Import the Recognition class  
+from speech engine import Recognition  
 
-# recognize_command()
-as the name suggest recognize the audio in wave form and returns the its output in form of string and returns a filtered string with only neccessary info to make further searching faster it uses class KaldiRecognizer() and meathod .AcceptWaveForm() and .result()
+# Create an instance of the Recognition class  
+recognizer = Recognition()  
 
+# Capture audio from the microphone  
+waveform = recognizer.take_command()  
 
-# Testing
-to test it first make sure you download the model file for indian eng from https://alphacephei.com/vosk/models i was not able to upload the folder directly on git hub so make sure you download it first
+# Recognize and process the captured audio  
+recognized_text = recognizer.recognize_command(waveform)  
 
-then create a python file in same directory and import the Recognize class as : 
+# Print the recognized text  
+print(recognized_text)  
+```  
 
-from speechEngine import Recognize
+## Features  
+- Offline speech recognition using the Vosk model.  
+- Simple and intuitive interface for audio capture and processing.  
+- Customizable for different languages and models.  
 
-then create an object for Recognize class and and use the meathod above the output from take_command() will serve as input for recognize_command()
+## Contributing  
+Contributions are welcome! Feel free to fork this repository, submit pull requests, or open issues for feature requests and bug fixes.  
+
+## License  
+This project is licensed under the MIT License. See the LICENSE file for details.
