@@ -71,6 +71,3 @@ print(recognized_text)
 
 ## Contributing  
 Contributions are welcome! Feel free to fork this repository, submit pull requests, or open issues for feature requests and bug fixes.  
-
-## License  
-This project is licensed under the MIT License. See the LICENSE file for details.
